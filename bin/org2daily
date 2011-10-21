@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require('org-ruby')
 
 content = File.read('daily.org', :encoding => 'utf-8')
@@ -18,7 +19,7 @@ end
 title = find_title(parser)
 
 parser.headlines.each_with_index do |headline, index|
-  puts "#{title} ##{index}"
+  puts "#{title} ##{index+1}"
   puts headline.body_lines[1..headline.body_lines.length].join("\n")
   puts "-" * 40
 end
