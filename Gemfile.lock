@@ -1,0 +1,23 @@
+PATH
+  remote: .
+  specs:
+    org2daily (0.0.1)
+      org-ruby (~> 0.5.3)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    minitest (2.6.2)
+    org-ruby (0.5.3)
+      rubypants (>= 0.2.0)
+    rake (0.9.2)
+    rubypants (0.2.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  minitest (~> 2.0)
+  org2daily!
+  rake
