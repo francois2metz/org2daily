@@ -12,10 +12,9 @@ Gem::Specification.new do |s|
 EOF
   s.summary          = ""
   s.extra_rdoc_files = %w(README.md)
-  s.files            = Dir["README.md", "Gemfile", "lib/**/*.rb", "bin/*.rb"]
+  s.files            = Dir["README.md", "Gemfile", "bin/*"]
   s.executables      << "org2daily"
   s.bindir           = "bin"
-  s.require_paths    = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.add_dependency   "org-ruby", "~> 0.5.3"
   s.add_development_dependency "minitest", "~> 2.0"
