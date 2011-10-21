@@ -1,0 +1,7 @@
+#+TITLE: DailyDaily
+
+* DONE Create a script
+
+To create a daily, the best is to have a script parsing an org file.
+
+* TODO Have a good Daily idea

@@ -1,25 +1,50 @@
 #!/usr/bin/env ruby
-require('org-ruby')
+require 'org-ruby'
+require 'optparse'
 
-content = File.read('daily.org', :encoding => 'utf-8')
+options = {}
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: org2daily <file> [--day <day>]"
 
-parser = Orgmode::Parser.new(content)
+  opts.on("--day [DAY]", Integer, "Select only one day") do |d|
+    options[:day] = d.to_i
+  end
+end
+parser.parse!
 
-def find_title(parser)
-  title = ""
-  parser.header_lines.each do |line|
-    if line.to_s =~ /^\#\+TITLE/
-      title = line.to_s.gsub(/^\#\+TITLE:/, '').strip!
-      break
+if ARGV[0]
+  content = File.read(ARGV[0], :encoding => 'utf-8')
+
+  parser = Orgmode::Parser.new(content)
+
+  def find_title(parser)
+    title = ""
+    parser.header_lines.each do |line|
+      if line.to_s =~ /^\#\+TITLE/
+        title = line.to_s.gsub(/^\#\+TITLE:/, '').strip!
+        break
+      end
+    end
+    title
+  end
+
+  def print_daily(title, headline, day)
+    puts "#{title} ##{day}"
+    puts headline.body_lines[1..headline.body_lines.length].join("\n")
+  end
+
+  title = find_title(parser)
+
+  if options[:day]
+    print_daily(title, parser.headlines[options[:day] - 1], options[:day])
+  else
+    parser.headlines.each_with_index do |headline, index|
+      print_daily(title, headline, index+1)
+      puts "-" * 40
     end
   end
-  title
-end
-
-title = find_title(parser)
-
-parser.headlines.each_with_index do |headline, index|
-  puts "#{title} ##{index+1}"
-  puts headline.body_lines[1..headline.body_lines.length].join("\n")
-  puts "-" * 40
+  exit(0)
+else
+  puts parser.banner
+  exit(1)
 end
